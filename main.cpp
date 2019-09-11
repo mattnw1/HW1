@@ -2,6 +2,8 @@
 #include <fstream> //read and write to files
 #include <stdio.h>
 #include <string>
+#include <cmath>
+
 
 
 using namespace std;
@@ -29,11 +31,19 @@ int main(int argc, char const *argv[])
   int GG = 0;
   int GC = 0;
   int GT = 0;
+  int varianceA;
+  int varianceC;
+  int varianceT;
+  int varianceG;
+
+
   ifstream dnafile;
   dnafile.open("DNA_Strings.txt");
   int numOfLines = 0;
   string line;
-  int dnaSum, dnaMean, dnaVariance, dnaStdDev;
+  int dnaSum, dnaMean;
+  int dnaVariance = 0;
+  int dnaStdDev;
 
   if (dnafile.is_open())
   {
@@ -157,8 +167,31 @@ int main(int argc, char const *argv[])
 
 
     //compute variance of length
+    varianceA = A-dnaMean;
+    varianceC = C-dnaMean;
+    varianceT = T-dnaMean;
+    varianceG = G-dnaMean;
+    //cout << varianceA << "varAtest" << endl;
+    
+    dnaVariance += pow(varianceA, 2);
+    //cout << dnaVariance << "test1" <<endl;
+
+    dnaVariance += pow(varianceC, 2);
+    //cout << dnaVariance << "test2" <<endl;
+
+    dnaVariance += pow(varianceT, 2);
+    //cout << dnaVariance << "test3" <<endl;
+
+    dnaVariance += pow(varianceG, 2);
+    //cout << dnaVariance << "test4" <<endl;
+
+    dnaVariance=dnaVariance/4;
+    //cout << dnaVariance << "test5" <<endl;
 
     //compute standard deviation of length
+    dnaStdDev = sqrt(dnaVariance);
+    cout << dnaStdDev << "stdDev" <<endl;
+
 
   }
     /* code */
