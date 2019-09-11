@@ -35,6 +35,27 @@ int main(int argc, char const *argv[])
   int varianceC;
   int varianceT;
   int varianceG;
+  double relativeProbA;
+  double relativeProbC;
+  double relativeProbT;
+  double relativeProbG;
+  double relativeProbAA;
+  double relativeProbAC;
+  double relativeProbAT;
+  double relativeProbAG;
+  double relativeProbCA;
+  double relativeProbCC;
+  double relativeProbCT;
+  double relativeProbCG;
+  double relativeProbTA;
+  double relativeProbTT;
+  double relativeProbTC;
+  double relativeProbTG;
+  double relativeProbGA;
+  double relativeProbGG;
+  double relativeProbGC;
+  double relativeProbGT;
+
 
 
   ifstream dnafile;
@@ -172,7 +193,7 @@ int main(int argc, char const *argv[])
     varianceT = T-dnaMean;
     varianceG = G-dnaMean;
     //cout << varianceA << "varAtest" << endl;
-    
+
     dnaVariance += pow(varianceA, 2);
     //cout << dnaVariance << "test1" <<endl;
 
@@ -190,11 +211,45 @@ int main(int argc, char const *argv[])
 
     //compute standard deviation of length
     dnaStdDev = sqrt(dnaVariance);
-    cout << dnaStdDev << "stdDev" <<endl;
+    //cout << dnaStdDev << "stdDev" <<endl;
 
+    //compute relative probabilities for nucleotides
+    relativeProbA = (double)A/dnaSum;
+    relativeProbC = (double)C/dnaSum;
+    relativeProbG = (double)G/dnaSum;
+    relativeProbT = (double)T/dnaSum;
+    //cout << relativeProbA << " relativeProbA" << endl;
+    //cout << relativeProbC << " relativeProbA" << endl;
+    //cout << relativeProbG << " relativeProbA" << endl;
+    //cout << relativeProbT << " relativeProbA" << endl;
+    //cout << relativeProbA + relativeProbC + relativeProbG + relativeProbT << " totalProb" << endl;
+
+    //compute relative probabilities for bigrams
+    relativeProbAA = (double)AA/(dnaSum/2);
+    relativeProbAC = (double)AC/(dnaSum/2);
+    relativeProbAT = (double)AT/(dnaSum/2);
+    relativeProbAG = (double)AG/(dnaSum/2);
+    relativeProbCA = (double)CA/(dnaSum/2);
+    relativeProbCC = (double)CC/(dnaSum/2);
+    relativeProbCT = (double)CT/(dnaSum/2);
+    relativeProbCG = (double)CG/(dnaSum/2);
+    relativeProbTA = (double)TA/(dnaSum/2);
+    relativeProbTT = (double)TT/(dnaSum/2);
+    relativeProbTC = (double)TC/(dnaSum/2);
+    relativeProbTG = (double)TG/(dnaSum/2);
+    relativeProbGA = (double)GA/(dnaSum/2);
+    relativeProbGG = (double)GG/(dnaSum/2);
+    relativeProbGC = (double)GC/(dnaSum/2);
+    relativeProbGT = (double)GT/(dnaSum/2);
+
+    //cout << relativeProbAA << " relativeProbAA" << endl;
 
   }
-    /* code */
+
     dnafile.close();
+
+    ofstream outputFile;
+    outputFile.open("matthewNwerem.txt");
+    outputFile << "Temp write to file" << endl;
     return 0;
-  }
+}
