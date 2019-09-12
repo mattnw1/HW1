@@ -35,26 +35,26 @@ int main(int argc, char const *argv[])
   int varianceC;
   int varianceT;
   int varianceG;
-  double relativeProbA;
-  double relativeProbC;
-  double relativeProbT;
-  double relativeProbG;
-  double relativeProbAA;
-  double relativeProbAC;
-  double relativeProbAT;
-  double relativeProbAG;
-  double relativeProbCA;
-  double relativeProbCC;
-  double relativeProbCT;
-  double relativeProbCG;
-  double relativeProbTA;
-  double relativeProbTT;
-  double relativeProbTC;
-  double relativeProbTG;
-  double relativeProbGA;
-  double relativeProbGG;
-  double relativeProbGC;
-  double relativeProbGT;
+  double relativeProbA = 0;
+  double relativeProbC = 0;
+  double relativeProbT = 0;
+  double relativeProbG = 0;
+  double relativeProbAA = 0;
+  double relativeProbAC = 0;
+  double relativeProbAT = 0;
+  double relativeProbAG = 0;
+  double relativeProbCA = 0;
+  double relativeProbCC = 0;
+  double relativeProbCT = 0;
+  double relativeProbCG = 0;
+  double relativeProbTA = 0;
+  double relativeProbTT = 0;
+  double relativeProbTC = 0;
+  double relativeProbTG = 0;
+  double relativeProbGA = 0;
+  double relativeProbGG = 0;
+  double relativeProbGC = 0;
+  double relativeProbGT = 0;
 
 
 
@@ -62,9 +62,10 @@ int main(int argc, char const *argv[])
   dnafile.open("DNA_Strings.txt");
   int numOfLines = 0;
   string line;
-  int dnaSum, dnaMean;
+  int dnaSum = 0;
+  int dnaMean = 0;
   int dnaVariance = 0;
-  int dnaStdDev;
+  int dnaStdDev = 0;
 
   if (dnafile.is_open())
   {
@@ -183,7 +184,7 @@ int main(int argc, char const *argv[])
     //cout << dnaSum << endl;
 
     //compute mean of length
-    dnaMean = (A+T+G+C)/numOfLines;
+    dnaMean = dnaSum/numOfLines;
     //cout << dnaMean << endl;
 
 
@@ -206,7 +207,7 @@ int main(int argc, char const *argv[])
     dnaVariance += pow(varianceG, 2);
     //cout << dnaVariance << "test4" <<endl;
 
-    dnaVariance=dnaVariance/4;
+    dnaVariance=dnaVariance/numOfLines;
     //cout << dnaVariance << "test5" <<endl;
 
     //compute standard deviation of length
@@ -243,13 +244,39 @@ int main(int argc, char const *argv[])
     relativeProbGT = (double)GT/(dnaSum/2);
 
     //cout << relativeProbAA << " relativeProbAA" << endl;
-
   }
 
     dnafile.close();
 
     ofstream outputFile;
     outputFile.open("matthewNwerem.txt");
-    outputFile << "Temp write to file" << endl;
+    //outputFile << "Temp write to file" << endl;
+    outputFile << "Name: Matthew Nwerem\nStudentID: 2277158\nInstagram: mattnw\nLinkedIn: linkedin.com/in/matthewnwerem/\nCPSC 350-01\nAssignment1\n" << endl; //instagram is an ect.
+    outputFile << "The sum length of DNA nucleotides is: " << dnaSum << endl;
+    outputFile << "The mean length of DNA nucleotides is " << dnaMean << endl;
+    outputFile << "The variance length of DNA nucleotides is: " << dnaVariance << endl;
+    outputFile << "The standard deviation length of DNA nucleotides is: " << dnaStdDev << endl << endl;
+    outputFile << "--Below prints the relative probability of each nucleotide--" << endl << endl;
+    outputFile << "A:  " << relativeProbA << endl;
+    outputFile << "C:  " << relativeProbC << endl;
+    outputFile << "T:  " << relativeProbT << endl;
+    outputFile << "G:  " << relativeProbG << endl << endl;
+    outputFile << "--Below prints the relative probability of each nucleotide bigram--" << endl << endl;
+    outputFile << "AA:  " << relativeProbAA << endl;
+    outputFile << "AC:  " << relativeProbAC << endl;
+    outputFile << "AT:  " << relativeProbAT << endl;
+    outputFile << "AG:  " << relativeProbAG << endl;
+    outputFile << "CA:  " << relativeProbCA << endl;
+    outputFile << "CC:  " << relativeProbCC << endl;
+    outputFile << "CT:  " << relativeProbCT << endl;
+    outputFile << "CG:  " << relativeProbCG << endl;
+    outputFile << "TA:  " << relativeProbTA << endl;
+    outputFile << "TC:  " << relativeProbTC << endl;
+    outputFile << "TT:  " << relativeProbTT << endl;
+    outputFile << "TG:  " << relativeProbTG << endl;
+    outputFile << "GA:  " << relativeProbGA << endl;
+    outputFile << "GC:  " << relativeProbGC << endl;
+    outputFile << "GT:  " << relativeProbGT << endl;
+    outputFile << "GG:  " << relativeProbGG << endl;
     return 0;
 }
