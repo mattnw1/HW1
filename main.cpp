@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <string>
 #include <cmath>
+#include <time.h> 
+
 
 
 
@@ -55,6 +57,7 @@ int main(int argc, char const *argv[])
   double relativeProbGG = 0;
   double relativeProbGC = 0;
   double relativeProbGT = 0;
+  const double pi = 3.14159265358979;
 
 
 
@@ -244,6 +247,28 @@ int main(int argc, char const *argv[])
     relativeProbGT = (double)GT/(dnaSum/2);
 
     //cout << relativeProbAA << " relativeProbAA" << endl;
+
+    //gaussian distribution
+    double randomVariableC;
+    double randomA = rand()/RAND_MAX;
+    double randomB = rand()/RAND_MAX;
+    double randomVariableD;
+
+    srand(5);
+    //cout << rand()%100 << "test" << endl;
+    cout << randomA << "randA" <<endl;
+    cout << randomB << "randB" <<endl;
+
+
+    randomVariableC = (sqrt(-2*log(randomA))*cos(2*pi*randomB));
+    randomVariableD = round((dnaStdDev*randomVariableC) + dnaMean);
+    cout << randomVariableC << "C" << endl << randomVariableD << "D" << endl;
+
+
+    for (int i = 0; i < 1000; i++)
+    {
+
+    }
   }
 
     dnafile.close();
@@ -251,7 +276,7 @@ int main(int argc, char const *argv[])
     ofstream outputFile;
     outputFile.open("matthewNwerem.txt");
     //outputFile << "Temp write to file" << endl;
-    outputFile << "Name: Matthew Nwerem\nStudentID: 2277158\nInstagram: mattnw\nLinkedIn: linkedin.com/in/matthewnwerem/\nCPSC 350-01\nAssignment1\n" << endl; //instagram is an ect.
+    outputFile << "Name: Matthew Nwerem\nStudentID: 2277158\nInstagram: mattnw\nLinkedIn: linkedin.com/in/matthewnwerem/\nCPSC 350-01\nAssignment 1\n" << endl; //instagram is an ect.
     outputFile << "The sum length of DNA nucleotides is: " << dnaSum << endl;
     outputFile << "The mean length of DNA nucleotides is " << dnaMean << endl;
     outputFile << "The variance length of DNA nucleotides is: " << dnaVariance << endl;
