@@ -3,17 +3,19 @@
 #include <stdio.h>
 #include <string>
 #include <cmath>
-#include<ctime>
+#include <ctime>
 #include <time.h>
+#include <algorithm>
 
 
 
 
 using namespace std;
 
-
 int main(int argc, char const *argv[])
 {
+  cout << "This program is asimple analysis program\nthat will compute basic statistics\nfor a list of DNA strings." << endl << endl;
+  cout << "Summary statistics have been printed to a text file, along with 1000 DNA strings\nwhose lengths follow a Gaussian distribution based on previously computed basic statistics." << endl;
   int A = 0;
   int C = 0;
   int T = 0;
@@ -59,6 +61,7 @@ int main(int argc, char const *argv[])
   double relativeProbGC = 0;
   double relativeProbGT = 0;
   const double pi = 3.14159265358979;
+  bool anotherList = true;
 
 
 
@@ -248,8 +251,6 @@ int main(int argc, char const *argv[])
     relativeProbGT = (double)GT/(dnaSum/2);
 
     //cout << relativeProbAA << " relativeProbAA" << endl;
-
-
   }
 
     dnafile.close();
@@ -321,13 +322,55 @@ int main(int argc, char const *argv[])
         }
         outputFile << printedLine << endl;
       }
+      outputFile.close();
+
+      //while (anotherList)
+      //{
+
+      cout << "--List Processed--" << endl;
       cout << "Would you like to process another list?\nY = Yes\nAny other character = No" << endl;
       char answerConsole = cin.get();
-      /*
-      if (answerConsole == 'Y')
+      if (toupper(answerConsole) == 'Y')
       {
         anotherList = true;
+        string newFileName;
+        ofstream f;
         cout << "Enter a name for the new file to be created" << endl;
+        cin >> newFileName;
+        cout << "\n--File Created--" << endl;
+        getline(cin, newFileName);
+        f.open(newFileName);
+
+        for (int i = 0; i < 1000; i++)
+        {
+          double randomA = (RAND_MAX - rand())/(double)(RAND_MAX);
+          double randomB = (RAND_MAX - rand())/(double)(RAND_MAX);
+          string printedLine;
+          srand(time(0));
+          randomVariableC = (sqrt(-2*log(randomA))*cos(2*pi*randomB));
+          randomVariableD = round((dnaStdDev*randomVariableC) + dnaMean);
+          for (int j = 0; j < randomVariableD; ++j)
+          {
+            randomNumber = (RAND_MAX - rand())/(double)(RAND_MAX);
+            if(randomNumber < relativeProbA)
+            {
+              printedLine += "A";
+            }
+            else if (randomNumber < (relativeProbA + relativeProbC))
+            {
+              printedLine += "C";
+            }
+            else if (randomNumber < (relativeProbA + relativeProbC + relativeProbT))
+            {
+              printedLine += "T";
+            }
+            else
+            {
+              printedLine += "G";
+            }
+          }
+          //newFileName << printedLine << endl;
+        }
       }
       else
       {
@@ -335,7 +378,10 @@ int main(int argc, char const *argv[])
         anotherList = false;
         exit(0);
       }
-      */
+
+      //}
+
+
 
 
 
