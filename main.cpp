@@ -3,7 +3,8 @@
 #include <stdio.h>
 #include <string>
 #include <cmath>
-#include <time.h> 
+#include<ctime>
+#include <time.h>
 
 
 
@@ -248,33 +249,14 @@ int main(int argc, char const *argv[])
 
     //cout << relativeProbAA << " relativeProbAA" << endl;
 
-    //gaussian distribution
-    double randomVariableC;
-    double randomA = rand()/RAND_MAX;
-    double randomB = rand()/RAND_MAX;
-    double randomVariableD;
 
-    srand(5);
-    //cout << rand()%100 << "test" << endl;
-    cout << randomA << "randA" <<endl;
-    cout << randomB << "randB" <<endl;
-
-
-    randomVariableC = (sqrt(-2*log(randomA))*cos(2*pi*randomB));
-    randomVariableD = round((dnaStdDev*randomVariableC) + dnaMean);
-    cout << randomVariableC << "C" << endl << randomVariableD << "D" << endl;
-
-
-    for (int i = 0; i < 1000; i++)
-    {
-
-    }
   }
 
     dnafile.close();
 
     ofstream outputFile;
     outputFile.open("matthewNwerem.txt");
+
     //outputFile << "Temp write to file" << endl;
     outputFile << "Name: Matthew Nwerem\nStudentID: 2277158\nInstagram: mattnw\nLinkedIn: linkedin.com/in/matthewnwerem/\nCPSC 350-01\nAssignment 1\n" << endl; //instagram is an ect.
     outputFile << "The sum length of DNA nucleotides is: " << dnaSum << endl;
@@ -303,5 +285,59 @@ int main(int argc, char const *argv[])
     outputFile << "GC:  " << relativeProbGC << endl;
     outputFile << "GT:  " << relativeProbGT << endl;
     outputFile << "GG:  " << relativeProbGG << endl;
+
+      //gaussian distribution
+      double randomVariableC;
+      double randomVariableD;
+      double randomNumber;
+
+      for (int i = 0; i < 1000; i++)
+      {
+        double randomA = (RAND_MAX - rand())/(double)(RAND_MAX);
+        double randomB = (RAND_MAX - rand())/(double)(RAND_MAX);
+        string printedLine;
+        srand(time(0));
+        randomVariableC = (sqrt(-2*log(randomA))*cos(2*pi*randomB));
+        randomVariableD = round((dnaStdDev*randomVariableC) + dnaMean);
+        for (int j = 0; j < randomVariableD; ++j)
+        {
+          randomNumber = (RAND_MAX - rand())/(double)(RAND_MAX);
+          if(randomNumber < relativeProbA)
+          {
+            printedLine += "A";
+          }
+          else if (randomNumber < (relativeProbA + relativeProbC))
+          {
+            printedLine += "C";
+          }
+          else if (randomNumber < (relativeProbA + relativeProbC + relativeProbT))
+          {
+            printedLine += "T";
+          }
+          else
+          {
+            printedLine += "G";
+          }
+        }
+        outputFile << printedLine << endl;
+      }
+      cout << "Would you like to process another list?\nY = Yes\nAny other character = No" << endl;
+      char answerConsole = cin.get();
+      /*
+      if (answerConsole == 'Y')
+      {
+        anotherList = true;
+        cout << "Enter a name for the new file to be created" << endl;
+      }
+      else
+      {
+        cout << "Exiting Program..." << endl;
+        anotherList = false;
+        exit(0);
+      }
+      */
+
+
+
     return 0;
 }
