@@ -14,8 +14,8 @@ using namespace std;
 
 int main(int argc, char const *argv[])
 {
-  cout << "This program is asimple analysis program\nthat will compute basic statistics\nfor a list of DNA strings." << endl << endl;
-  cout << "Summary statistics have been printed to a text file, along with 1000 DNA strings\nwhose lengths follow a Gaussian distribution based on previously computed basic statistics." << endl;
+  cout << "This program is asimple analysis program that will compute basic \nstatistics for a list of DNA strings." << endl << endl;
+  cout << "Summary statistics have been printed to a text file, along with \n1000 DNA strings whose lengths follow a Gaussian distribution based \non previously computed basic statistics." << endl;
   int A = 0;
   int C = 0;
   int T = 0;
@@ -79,9 +79,7 @@ int main(int argc, char const *argv[])
     while (getline(dnafile,line))
     {
 
-  //  std::cout << "DNA file" << '\n';
-
-      // Count single nucleotides
+      // Loop to count single nucleotides
       for (int i = 0; i < line.size(); ++i)
       {
         // using transform() function and ::toupper in STL
@@ -105,7 +103,6 @@ int main(int argc, char const *argv[])
         ++G;
       }
 
-    //  cout << A << endl;
 
       // Count bigram nucleotides
       for (int i = 0; i < line.size(); i+=2)
@@ -162,75 +159,38 @@ int main(int argc, char const *argv[])
 
         else if (bigram == "GT")
           ++GT;
-        // cout << bigram << " test"<< endl;
       }
-      /*
-      cout << AA << " AAs" << endl;
-      cout << AC << " ACs" << endl;
-      cout << AT << " ATs" << endl;
-      cout << AG << " AGs" << endl;
-      cout << CA << " CAs" << endl;
-      cout << CC << " CCs" << endl;
-      cout << CT << " CTs" << endl;
-      cout << CG << " CGs" << endl;
-      cout << TA << " TAs" << endl;
-      cout << TT << " TTs" << endl;
-      cout << TC << " TCs" << endl;
-      cout << TG << " TGs" << endl;
-      cout << GA << " GAs" << endl;
-      cout << GG << " GGs" << endl;
-      cout << GC << " GCs" << endl;
-      cout << GT << " GTs" << endl;
-      */
-    //std::cout << line << '\n';
     //cout << "Total Number of Gs: " << G <<endl;
     ++numOfLines;
     }
+
     //compute sum of length
     dnaSum = (A+T+G+C);
-    //cout << dnaSum << endl;
 
     //compute mean of length
     dnaMean = dnaSum/numOfLines;
-    //cout << dnaMean << endl;
 
 
-    //compute variance of length
+    //compute variance of length for each nucleotide
     varianceA = A-dnaMean;
     varianceC = C-dnaMean;
     varianceT = T-dnaMean;
     varianceG = G-dnaMean;
-    //cout << varianceA << "varAtest" << endl;
 
     dnaVariance += pow(varianceA, 2);
-    //cout << dnaVariance << "test1" <<endl;
-
     dnaVariance += pow(varianceC, 2);
-    //cout << dnaVariance << "test2" <<endl;
-
     dnaVariance += pow(varianceT, 2);
-    //cout << dnaVariance << "test3" <<endl;
-
     dnaVariance += pow(varianceG, 2);
-    //cout << dnaVariance << "test4" <<endl;
-
     dnaVariance=dnaVariance/numOfLines;
-    //cout << dnaVariance << "test5" <<endl;
 
     //compute standard deviation of length
     dnaStdDev = sqrt(dnaVariance);
-    //cout << dnaStdDev << "stdDev" <<endl;
 
     //compute relative probabilities for nucleotides
     relativeProbA = (double)A/dnaSum;
     relativeProbC = (double)C/dnaSum;
     relativeProbG = (double)G/dnaSum;
     relativeProbT = (double)T/dnaSum;
-    //cout << relativeProbA << " relativeProbA" << endl;
-    //cout << relativeProbC << " relativeProbA" << endl;
-    //cout << relativeProbG << " relativeProbA" << endl;
-    //cout << relativeProbT << " relativeProbA" << endl;
-    //cout << relativeProbA + relativeProbC + relativeProbG + relativeProbT << " totalProb" << endl;
 
     //compute relative probabilities for bigrams
     relativeProbAA = (double)AA/(dnaSum/2);
@@ -249,16 +209,12 @@ int main(int argc, char const *argv[])
     relativeProbGG = (double)GG/(dnaSum/2);
     relativeProbGC = (double)GC/(dnaSum/2);
     relativeProbGT = (double)GT/(dnaSum/2);
-
-    //cout << relativeProbAA << " relativeProbAA" << endl;
   }
-
     dnafile.close();
 
+    // Creation of basic statistics file and writing to said file
     ofstream outputFile;
     outputFile.open("matthewNwerem.txt");
-
-    //outputFile << "Temp write to file" << endl;
     outputFile << "Name: Matthew Nwerem\nStudentID: 2277158\nInstagram: mattnw\nLinkedIn: linkedin.com/in/matthewnwerem/\nCPSC 350-01\nAssignment 1\n" << endl; //instagram is an ect.
     outputFile << "The sum length of DNA nucleotides is: " << dnaSum << endl;
     outputFile << "The mean length of DNA nucleotides is " << dnaMean << endl;
@@ -287,19 +243,27 @@ int main(int argc, char const *argv[])
     outputFile << "GT:  " << relativeProbGT << endl;
     outputFile << "GG:  " << relativeProbGG << endl;
 
-      //gaussian distribution
+      /*
+      Gaussian distribution:
+      Each "random variable" can coincide with C and D from equations given in specs
+      */
       double randomVariableC;
       double randomVariableD;
       double randomNumber;
 
       for (int i = 0; i < 1000; i++)
       {
+
         double randomA = (RAND_MAX - rand())/(double)(RAND_MAX);
         double randomB = (RAND_MAX - rand())/(double)(RAND_MAX);
         string printedLine;
         srand(time(0));
+
+        // Below lines are equations given in specs to creat Gaussian dist.
         randomVariableC = (sqrt(-2*log(randomA))*cos(2*pi*randomB));
         randomVariableD = round((dnaStdDev*randomVariableC) + dnaMean);
+
+        //Writing out the gaussian distribution to .txt file
         for (int j = 0; j < randomVariableD; ++j)
         {
           randomNumber = (RAND_MAX - rand())/(double)(RAND_MAX);
@@ -324,6 +288,7 @@ int main(int argc, char const *argv[])
       }
       outputFile.close();
 
+      //Writing to a new text file that is to be processed
       //while (anotherList)
       //{
 
@@ -369,21 +334,18 @@ int main(int argc, char const *argv[])
               printedLine += "G";
             }
           }
+          //Writing to new file
           //newFileName << printedLine << endl;
         }
       }
+  //}
+
       else
       {
         cout << "Exiting Program..." << endl;
         anotherList = false;
         exit(0);
       }
-
-      //}
-
-
-
-
 
     return 0;
 }
